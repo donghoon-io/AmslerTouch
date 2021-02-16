@@ -71,7 +71,7 @@
         height: 150px;
         position: absolute;
         opacity: 1;
-        animation: scaleIn 2s infinite cubic-bezier(.36, .11, .89, .32);
+        animation: scaleIn 1.5s infinite cubic-bezier(.36, .11, .89, .32);
       }
       @keyframes scaleIn {
   from {
@@ -80,7 +80,7 @@
   }
   to {
     transform: scale(.5, .5);
-    opacity: .3;
+    opacity: 0;
   }
 }
   </style>

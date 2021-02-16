@@ -30413,7 +30413,7 @@ var app = (function () {
     			set_style(canvas_1, "display", "block");
     			set_style(canvas_1, "position", "absolute");
     			set_style(canvas_1, "z-index", /*zIndex*/ ctx[59]);
-    			add_location(canvas_1, file$c, 581, 6, 13400);
+    			add_location(canvas_1, file$c, 581, 6, 13399);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, canvas_1, anchor);
@@ -30557,7 +30557,7 @@ var app = (function () {
     			set_style(div, "height", /*canvasHeight*/ ctx[2] + "px");
     			set_style(div, "width", /*canvasWidth*/ ctx[1] + "px");
     			set_style(div, "background-color", /*backgroundColor*/ ctx[0]);
-    			add_location(div, file$c, 576, 2, 13179);
+    			add_location(div, file$c, 576, 2, 13178);
     		},
     		l: function claim(nodes) {
     			throw new Error_1("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -30650,7 +30650,7 @@ var app = (function () {
     	let { catenaryColor = "#0a0302" } = $$props;
     	let { gridColor = "rgba(150,150,150,0.17)" } = $$props;
     	let { backgroundColor = "#FFF" } = $$props;
-    	let { hideGrid = false } = $$props;
+    	let { hideGrid = true } = $$props;
     	let { canvasWidth = 400 } = $$props;
     	let { canvasHeight = 400 } = $$props;
     	let { disabled = false } = $$props;

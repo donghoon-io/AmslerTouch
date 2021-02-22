@@ -111,8 +111,8 @@
     <div
       class="flex flex-wrap justify-center bg-white shadow-xl rounded-lg  py-16 px-12 relative z-10"
     >
-      <div class="w-screen object-center">
-          <div class="circle" />
+      <div id="grid-box" class="w-screen object-center">
+        <div class="circle" />
         <CanvasDraw
           bind:this={SDraw}
           {brushColor}

@@ -66,6 +66,8 @@
    let points = [];
    let lines = [];
 
+   let isStaticDrawing = true;
+
    let mouseHasMoved = true;
    let valuesChanged = true;
    let isDrawing = false;
@@ -262,11 +264,53 @@
     });
   };
 
+  var circleSize = 0;
+  var timer = 0;
+
+  function drawCircle(x, y) {
+    timer = setInterval(function() {
+      if (true) {
+        circleSize += 2;
+
+        let tempLines = lines.slice(0, lines.length-1);
+        clear();
+        lines = tempLines;
+        console.log(lines);
+        simulateDrawingLines({ lines, immediate: true });
+
+        let tempPoints = [];
+
+        for (var step = 0; step < 360; step++) {
+          tempPoints.push({
+            x: x+Math.cos(degreesToRadians(step)) * circleSize,
+            y: y+Math.sin(degreesToRadians(step)) * circleSize
+          })
+        }
+
+        lines.push({
+          points: tempPoints,
+          brushColor: brushColor,
+          brushRadius: brushRadius
+        })
+        simulateDrawingLines({ lines, immediate: true });
+      } else {
+        clearInterval(timer);
+      }
+    }, 20);
+  }
+  function degreesToRadians(degrees) {
+    const pi = Math.PI;
+    return degrees * (pi / 180);
+  }
+
   let handleDrawStart = e => {
     e.preventDefault();
 
+    drawCircle(355, 209);
+
     // Start drawing
     isPressing = true;
+    isStaticDrawing = true;
 
     const { x, y } = getPointerPos(e);
 

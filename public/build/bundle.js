@@ -30389,18 +30389,18 @@ var app = (function () {
 
     function get_each_context(ctx, list, i) {
     	const child_ctx = ctx.slice();
-    	child_ctx[58] = list[i].name;
-    	child_ctx[59] = list[i].zIndex;
-    	child_ctx[60] = list;
-    	child_ctx[61] = i;
+    	child_ctx[62] = list[i].name;
+    	child_ctx[63] = list[i].zIndex;
+    	child_ctx[64] = list;
+    	child_ctx[65] = i;
     	return child_ctx;
     }
 
-    // (589:4) {#each canvasTypes as {name, zIndex}}
+    // (633:4) {#each canvasTypes as {name, zIndex}}
     function create_each_block(ctx) {
     	let canvas_1;
     	let canvas_1_key_value;
-    	let name = /*name*/ ctx[58];
+    	let name = /*name*/ ctx[62];
     	let mounted;
     	let dispose;
     	const assign_canvas_1 = () => /*canvas_1_binding*/ ctx[25](canvas_1, name);
@@ -30409,11 +30409,11 @@ var app = (function () {
     	const block = {
     		c: function create() {
     			canvas_1 = element("canvas");
-    			attr_dev(canvas_1, "key", canvas_1_key_value = /*name*/ ctx[58]);
+    			attr_dev(canvas_1, "key", canvas_1_key_value = /*name*/ ctx[62]);
     			set_style(canvas_1, "display", "block");
     			set_style(canvas_1, "position", "absolute");
-    			set_style(canvas_1, "z-index", /*zIndex*/ ctx[59]);
-    			add_location(canvas_1, file$c, 589, 6, 13666);
+    			set_style(canvas_1, "z-index", /*zIndex*/ ctx[63]);
+    			add_location(canvas_1, file$c, 633, 6, 14708);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, canvas_1, anchor);
@@ -30424,7 +30424,7 @@ var app = (function () {
     					listen_dev(
     						canvas_1,
     						"mousedown",
-    						/*name*/ ctx[58] === "interface"
+    						/*name*/ ctx[62] === "interface"
     						? /*handleDrawStart*/ ctx[7]
     						: undefined,
     						false,
@@ -30434,7 +30434,7 @@ var app = (function () {
     					listen_dev(
     						canvas_1,
     						"mousemove",
-    						/*name*/ ctx[58] === "interface"
+    						/*name*/ ctx[62] === "interface"
     						? /*handleDrawMove*/ ctx[8]
     						: undefined,
     						false,
@@ -30444,7 +30444,7 @@ var app = (function () {
     					listen_dev(
     						canvas_1,
     						"mouseup",
-    						/*name*/ ctx[58] === "interface"
+    						/*name*/ ctx[62] === "interface"
     						? /*handleDrawEnd*/ ctx[9]
     						: undefined,
     						false,
@@ -30454,7 +30454,7 @@ var app = (function () {
     					listen_dev(
     						canvas_1,
     						"mouseout",
-    						/*name*/ ctx[58] === "interface"
+    						/*name*/ ctx[62] === "interface"
     						? /*handleDrawEnd*/ ctx[9]
     						: undefined,
     						false,
@@ -30464,7 +30464,7 @@ var app = (function () {
     					listen_dev(
     						canvas_1,
     						"touchstart",
-    						/*name*/ ctx[58] === "interface"
+    						/*name*/ ctx[62] === "interface"
     						? /*handleDrawStart*/ ctx[7]
     						: undefined,
     						false,
@@ -30474,7 +30474,7 @@ var app = (function () {
     					listen_dev(
     						canvas_1,
     						"touchmove",
-    						/*name*/ ctx[58] === "interface"
+    						/*name*/ ctx[62] === "interface"
     						? /*handleDrawMove*/ ctx[8]
     						: undefined,
     						false,
@@ -30484,7 +30484,7 @@ var app = (function () {
     					listen_dev(
     						canvas_1,
     						"touchend",
-    						/*name*/ ctx[58] === "interface"
+    						/*name*/ ctx[62] === "interface"
     						? /*handleDrawEnd*/ ctx[9]
     						: undefined,
     						false,
@@ -30494,7 +30494,7 @@ var app = (function () {
     					listen_dev(
     						canvas_1,
     						"touchcancel",
-    						/*name*/ ctx[58] === "interface"
+    						/*name*/ ctx[62] === "interface"
     						? /*handleDrawEnd*/ ctx[9]
     						: undefined,
     						false,
@@ -30509,9 +30509,9 @@ var app = (function () {
     		p: function update(new_ctx, dirty) {
     			ctx = new_ctx;
 
-    			if (name !== /*name*/ ctx[58]) {
+    			if (name !== /*name*/ ctx[62]) {
     				unassign_canvas_1();
-    				name = /*name*/ ctx[58];
+    				name = /*name*/ ctx[62];
     				assign_canvas_1();
     			}
     		},
@@ -30527,7 +30527,7 @@ var app = (function () {
     		block,
     		id: create_each_block.name,
     		type: "each",
-    		source: "(589:4) {#each canvasTypes as {name, zIndex}}",
+    		source: "(633:4) {#each canvasTypes as {name, zIndex}}",
     		ctx
     	});
 
@@ -30557,7 +30557,7 @@ var app = (function () {
     			set_style(div, "height", /*canvasHeight*/ ctx[2] + "px");
     			set_style(div, "width", /*canvasWidth*/ ctx[1] + "px");
     			set_style(div, "background-color", /*backgroundColor*/ ctx[0]);
-    			add_location(div, file$c, 584, 2, 13445);
+    			add_location(div, file$c, 628, 2, 14487);
     		},
     		l: function claim(nodes) {
     			throw new Error_1("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -30639,6 +30639,11 @@ var app = (function () {
     	};
     }
 
+    function degreesToRadians(degrees) {
+    	const pi = Math.PI;
+    	return degrees * (pi / 180);
+    }
+
     function instance$e($$self, $$props, $$invalidate) {
     	let { $$slots: slots = {}, $$scope } = $$props;
     	validate_slots("CanvasDraw", slots, []);
@@ -30673,6 +30678,7 @@ var app = (function () {
     	let catenary = new lib$1.Catenary();
     	let points = [];
     	let lines = [];
+    	let isStaticDrawing = true;
     	let mouseHasMoved = true;
     	let valuesChanged = true;
     	let isDrawing = false;
@@ -30859,12 +30865,49 @@ var app = (function () {
     		});
     	};
 
+    	var circleSize = 0;
+    	var timer = 0;
+
+    	function drawCircle(x, y) {
+    		timer = setInterval(
+    			function () {
+    				{
+    					circleSize += 2;
+    					let tempLines = lines.slice(0, lines.length - 1);
+    					clear();
+    					lines = tempLines;
+    					console.log(lines);
+    					simulateDrawingLines({ lines, immediate: true });
+    					let tempPoints = [];
+
+    					for (var step = 0; step < 360; step++) {
+    						tempPoints.push({
+    							x: x + Math.cos(degreesToRadians(step)) * circleSize,
+    							y: y + Math.sin(degreesToRadians(step)) * circleSize
+    						});
+    					}
+
+    					lines.push({
+    						points: tempPoints,
+    						brushColor,
+    						brushRadius
+    					});
+
+    					simulateDrawingLines({ lines, immediate: true });
+    				}
+    			},
+    			20
+    		);
+    	}
+
     	let handleDrawStart = e => {
     		e.preventDefault();
+    		drawCircle(355, 209);
 
     		// Start drawing
     		isPressing = true;
 
+    		isStaticDrawing = true;
     		const { x, y } = getPointerPos(e);
 
     		if (e.touches && e.touches.length > 0) {
@@ -31242,6 +31285,7 @@ var app = (function () {
     		catenary,
     		points,
     		lines,
+    		isStaticDrawing,
     		mouseHasMoved,
     		valuesChanged,
     		isDrawing,
@@ -31256,6 +31300,10 @@ var app = (function () {
     		getSaveData,
     		loadSaveData,
     		simulateDrawingLines,
+    		circleSize,
+    		timer,
+    		drawCircle,
+    		degreesToRadians,
     		handleDrawStart,
     		handleDrawMove,
     		handleDrawEnd,
@@ -31298,6 +31346,7 @@ var app = (function () {
     		if ("catenary" in $$props) catenary = $$props.catenary;
     		if ("points" in $$props) points = $$props.points;
     		if ("lines" in $$props) lines = $$props.lines;
+    		if ("isStaticDrawing" in $$props) isStaticDrawing = $$props.isStaticDrawing;
     		if ("mouseHasMoved" in $$props) mouseHasMoved = $$props.mouseHasMoved;
     		if ("valuesChanged" in $$props) valuesChanged = $$props.valuesChanged;
     		if ("isDrawing" in $$props) isDrawing = $$props.isDrawing;
@@ -31312,6 +31361,8 @@ var app = (function () {
     		if ("getSaveData" in $$props) getSaveData = $$props.getSaveData;
     		if ("loadSaveData" in $$props) loadSaveData = $$props.loadSaveData;
     		if ("simulateDrawingLines" in $$props) simulateDrawingLines = $$props.simulateDrawingLines;
+    		if ("circleSize" in $$props) circleSize = $$props.circleSize;
+    		if ("timer" in $$props) timer = $$props.timer;
     		if ("handleDrawStart" in $$props) $$invalidate(7, handleDrawStart = $$props.handleDrawStart);
     		if ("handleDrawMove" in $$props) $$invalidate(8, handleDrawMove = $$props.handleDrawMove);
     		if ("handleDrawEnd" in $$props) $$invalidate(9, handleDrawEnd = $$props.handleDrawEnd);
@@ -31394,7 +31445,7 @@ var app = (function () {
     				undoDrawings: 23,
     				get_image_data: 24
     			},
-    			[-1, -1]
+    			[-1, -1, -1]
     		);
 
     		dispatch_dev("SvelteRegisterComponent", {
@@ -31767,52 +31818,53 @@ var app = (function () {
     			t23 = space();
     			input3 = element("input");
     			attr_dev(div0, "class", "circle svelte-tymi5x");
-    			add_location(div0, file$d, 114, 10, 2834);
+    			add_location(div0, file$d, 114, 8, 2846);
     			attr_dev(i0, "class", "fas fa-trash text-lg mr-1");
-    			add_location(i0, file$d, 128, 12, 3401);
-    			add_location(span0, file$d, 129, 12, 3453);
+    			add_location(i0, file$d, 128, 12, 3413);
+    			add_location(span0, file$d, 129, 12, 3465);
     			attr_dev(button0, "class", "github-star sm:ml-1 text-white font-bold px-6 py-4 rounded outline-none focus:outline-none mr-1 mb-1 bg-gray-800 active:bg-gray-700 uppercase text-sm shadow hover:shadow-lg ease-linear transition-all duration-150");
-    			add_location(button0, file$d, 124, 10, 3108);
+    			add_location(button0, file$d, 124, 10, 3120);
     			attr_dev(i1, "class", "fas fa-trash text-lg mr-1");
-    			add_location(i1, file$d, 135, 12, 3795);
-    			add_location(span1, file$d, 136, 12, 3847);
+    			add_location(i1, file$d, 135, 12, 3807);
+    			add_location(span1, file$d, 136, 12, 3859);
     			attr_dev(button1, "class", "github-star sm:ml-1 text-white font-bold px-6 py-4 rounded outline-none focus:outline-none mr-1 mb-1 bg-gray-800 active:bg-gray-700 uppercase text-sm shadow hover:shadow-lg ease-linear transition-all duration-150");
-    			add_location(button1, file$d, 131, 10, 3501);
+    			add_location(button1, file$d, 131, 10, 3513);
     			attr_dev(i2, "class", "fas fa-download text-lg mr-1");
-    			add_location(i2, file$d, 143, 12, 4200);
-    			add_location(span2, file$d, 144, 12, 4255);
+    			add_location(i2, file$d, 143, 12, 4212);
+    			add_location(span2, file$d, 144, 12, 4267);
     			attr_dev(button2, "class", "github-star sm:ml-1 text-white font-bold px-6 py-4 rounded outline-none focus:outline-none mr-1 mb-1 bg-gray-800 active:bg-gray-700 uppercase text-sm shadow hover:shadow-lg ease-linear transition-all duration-150");
-    			add_location(button2, file$d, 139, 10, 3897);
+    			add_location(button2, file$d, 139, 10, 3909);
     			attr_dev(i3, "class", "fab fa-github text-lg mr-1");
-    			add_location(i3, file$d, 152, 12, 4680);
-    			add_location(label0, file$d, 153, 12, 4733);
+    			add_location(i3, file$d, 152, 12, 4692);
+    			add_location(label0, file$d, 153, 12, 4745);
     			attr_dev(input0, "type", "color");
-    			add_location(input0, file$d, 154, 12, 4772);
+    			add_location(input0, file$d, 154, 12, 4784);
     			attr_dev(a, "href", "https://github.com/creativetimofficial/notus-svelte?ref=ns-index");
     			attr_dev(a, "target", "_blank");
     			attr_dev(a, "class", "github-star sm:ml-1 text-white font-bold px-6 py-4 rounded outline-none focus:outline-none mr-1 mb-1 bg-gray-800 active:bg-gray-700 uppercase text-sm shadow hover:shadow-lg ease-linear transition-all duration-150");
-    			add_location(a, file$d, 147, 10, 4308);
+    			add_location(a, file$d, 147, 10, 4320);
     			attr_dev(div1, "class", "sm:block flex flex-col mt-10");
-    			add_location(div1, file$d, 123, 8, 3055);
-    			add_location(label1, file$d, 160, 14, 4990);
+    			add_location(div1, file$d, 123, 8, 3067);
+    			add_location(label1, file$d, 160, 14, 5002);
     			attr_dev(input1, "type", "color");
-    			add_location(input1, file$d, 161, 14, 5031);
+    			add_location(input1, file$d, 161, 14, 5043);
     			attr_dev(div2, "class", "col-auto");
-    			add_location(div2, file$d, 159, 12, 4953);
-    			add_location(label2, file$d, 164, 14, 5146);
+    			add_location(div2, file$d, 159, 12, 4965);
+    			add_location(label2, file$d, 164, 14, 5158);
     			attr_dev(input2, "type", "number");
-    			add_location(input2, file$d, 165, 14, 5188);
+    			add_location(input2, file$d, 165, 14, 5200);
     			attr_dev(div3, "class", "col-auto");
-    			add_location(div3, file$d, 163, 12, 5109);
-    			add_location(label3, file$d, 168, 14, 5305);
+    			add_location(div3, file$d, 163, 12, 5121);
+    			add_location(label3, file$d, 168, 14, 5317);
     			attr_dev(input3, "type", "file");
-    			add_location(input3, file$d, 169, 14, 5372);
+    			add_location(input3, file$d, 169, 14, 5384);
     			attr_dev(div4, "class", "col-auto");
-    			add_location(div4, file$d, 167, 12, 5268);
+    			add_location(div4, file$d, 167, 12, 5280);
     			attr_dev(div5, "class", "form-row align-items-center");
-    			add_location(div5, file$d, 158, 10, 4899);
+    			add_location(div5, file$d, 158, 10, 4911);
     			attr_dev(div6, "class", "text-center mt-16");
-    			add_location(div6, file$d, 157, 8, 4857);
+    			add_location(div6, file$d, 157, 8, 4869);
+    			attr_dev(div7, "id", "grid-box");
     			attr_dev(div7, "class", "w-screen object-center");
     			add_location(div7, file$d, 113, 6, 2787);
     			attr_dev(div8, "class", "flex flex-wrap justify-center bg-white shadow-xl rounded-lg  py-16 px-12 relative z-10");
@@ -41418,52 +41470,53 @@ var app = (function () {
     			t23 = space();
     			input3 = element("input");
     			attr_dev(div0, "class", "circle svelte-tymi5x");
-    			add_location(div0, file$A, 114, 10, 2834);
+    			add_location(div0, file$A, 114, 8, 2846);
     			attr_dev(i0, "class", "fas fa-trash text-lg mr-1");
-    			add_location(i0, file$A, 128, 12, 3401);
-    			add_location(span0, file$A, 129, 12, 3453);
+    			add_location(i0, file$A, 128, 12, 3413);
+    			add_location(span0, file$A, 129, 12, 3465);
     			attr_dev(button0, "class", "github-star sm:ml-1 text-white font-bold px-6 py-4 rounded outline-none focus:outline-none mr-1 mb-1 bg-gray-800 active:bg-gray-700 uppercase text-sm shadow hover:shadow-lg ease-linear transition-all duration-150");
-    			add_location(button0, file$A, 124, 10, 3108);
+    			add_location(button0, file$A, 124, 10, 3120);
     			attr_dev(i1, "class", "fas fa-trash text-lg mr-1");
-    			add_location(i1, file$A, 135, 12, 3795);
-    			add_location(span1, file$A, 136, 12, 3847);
+    			add_location(i1, file$A, 135, 12, 3807);
+    			add_location(span1, file$A, 136, 12, 3859);
     			attr_dev(button1, "class", "github-star sm:ml-1 text-white font-bold px-6 py-4 rounded outline-none focus:outline-none mr-1 mb-1 bg-gray-800 active:bg-gray-700 uppercase text-sm shadow hover:shadow-lg ease-linear transition-all duration-150");
-    			add_location(button1, file$A, 131, 10, 3501);
+    			add_location(button1, file$A, 131, 10, 3513);
     			attr_dev(i2, "class", "fas fa-download text-lg mr-1");
-    			add_location(i2, file$A, 143, 12, 4200);
-    			add_location(span2, file$A, 144, 12, 4255);
+    			add_location(i2, file$A, 143, 12, 4212);
+    			add_location(span2, file$A, 144, 12, 4267);
     			attr_dev(button2, "class", "github-star sm:ml-1 text-white font-bold px-6 py-4 rounded outline-none focus:outline-none mr-1 mb-1 bg-gray-800 active:bg-gray-700 uppercase text-sm shadow hover:shadow-lg ease-linear transition-all duration-150");
-    			add_location(button2, file$A, 139, 10, 3897);
+    			add_location(button2, file$A, 139, 10, 3909);
     			attr_dev(i3, "class", "fab fa-github text-lg mr-1");
-    			add_location(i3, file$A, 152, 12, 4680);
-    			add_location(label0, file$A, 153, 12, 4733);
+    			add_location(i3, file$A, 152, 12, 4692);
+    			add_location(label0, file$A, 153, 12, 4745);
     			attr_dev(input0, "type", "color");
-    			add_location(input0, file$A, 154, 12, 4772);
+    			add_location(input0, file$A, 154, 12, 4784);
     			attr_dev(a, "href", "https://github.com/creativetimofficial/notus-svelte?ref=ns-index");
     			attr_dev(a, "target", "_blank");
     			attr_dev(a, "class", "github-star sm:ml-1 text-white font-bold px-6 py-4 rounded outline-none focus:outline-none mr-1 mb-1 bg-gray-800 active:bg-gray-700 uppercase text-sm shadow hover:shadow-lg ease-linear transition-all duration-150");
-    			add_location(a, file$A, 147, 10, 4308);
+    			add_location(a, file$A, 147, 10, 4320);
     			attr_dev(div1, "class", "sm:block flex flex-col mt-10");
-    			add_location(div1, file$A, 123, 8, 3055);
-    			add_location(label1, file$A, 160, 14, 4990);
+    			add_location(div1, file$A, 123, 8, 3067);
+    			add_location(label1, file$A, 160, 14, 5002);
     			attr_dev(input1, "type", "color");
-    			add_location(input1, file$A, 161, 14, 5031);
+    			add_location(input1, file$A, 161, 14, 5043);
     			attr_dev(div2, "class", "col-auto");
-    			add_location(div2, file$A, 159, 12, 4953);
-    			add_location(label2, file$A, 164, 14, 5146);
+    			add_location(div2, file$A, 159, 12, 4965);
+    			add_location(label2, file$A, 164, 14, 5158);
     			attr_dev(input2, "type", "number");
-    			add_location(input2, file$A, 165, 14, 5188);
+    			add_location(input2, file$A, 165, 14, 5200);
     			attr_dev(div3, "class", "col-auto");
-    			add_location(div3, file$A, 163, 12, 5109);
-    			add_location(label3, file$A, 168, 14, 5305);
+    			add_location(div3, file$A, 163, 12, 5121);
+    			add_location(label3, file$A, 168, 14, 5317);
     			attr_dev(input3, "type", "file");
-    			add_location(input3, file$A, 169, 14, 5372);
+    			add_location(input3, file$A, 169, 14, 5384);
     			attr_dev(div4, "class", "col-auto");
-    			add_location(div4, file$A, 167, 12, 5268);
+    			add_location(div4, file$A, 167, 12, 5280);
     			attr_dev(div5, "class", "form-row align-items-center");
-    			add_location(div5, file$A, 158, 10, 4899);
+    			add_location(div5, file$A, 158, 10, 4911);
     			attr_dev(div6, "class", "text-center mt-16");
-    			add_location(div6, file$A, 157, 8, 4857);
+    			add_location(div6, file$A, 157, 8, 4869);
+    			attr_dev(div7, "id", "grid-box");
     			attr_dev(div7, "class", "w-screen object-center");
     			add_location(div7, file$A, 113, 6, 2787);
     			attr_dev(div8, "class", "flex flex-wrap justify-center bg-white shadow-xl rounded-lg  py-16 px-12 relative z-10");

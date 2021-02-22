@@ -123,6 +123,13 @@
         />
         <div class="sm:block flex flex-col mt-10">
           <button
+            on:click={undo}
+            class="github-star sm:ml-1 text-white font-bold px-6 py-4 rounded outline-none focus:outline-none mr-1 mb-1 bg-gray-800 active:bg-gray-700 uppercase text-sm shadow hover:shadow-lg ease-linear transition-all duration-150"
+          >
+            <i class="fas fa-trash text-lg mr-1" />
+            <span>Undo</span>
+          </button>
+          <button
             on:click={clear}
             class="github-star sm:ml-1 text-white font-bold px-6 py-4 rounded outline-none focus:outline-none mr-1 mb-1 bg-gray-800 active:bg-gray-700 uppercase text-sm shadow hover:shadow-lg ease-linear transition-all duration-150"
           >

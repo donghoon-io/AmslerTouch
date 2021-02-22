@@ -158,8 +158,10 @@
   };
 
   let undo = () => {
-    const lines = lines.slice(0, -1);
+    let tempLines = lines.slice(0, lines.length-1);
     clear();
+    lines = tempLines;
+    console.log(lines);
     simulateDrawingLines({ lines, immediate: true });
     triggerOnChange();
   };
@@ -217,21 +219,25 @@
     let curTime = 0;
     let timeoutGap = immediate ? 0 : loadTimeOffset;
 
-    lines.forEach(line => {
-      const { points, brushColor, brushRadius } = line;
+    var tempLines = lines.slice();
+    lines.length = 0;
+    console.log(tempLines);
+    tempLines.forEach(line => {
+      
 
       // Draw all at once if immediate flag is set, instead of using setTimeout
       if (immediate) {
         // Draw the points
         drawPoints({
-          points,
-          brushColor,
-          brushRadius
+          points: line.points,
+          brushColor: line.brushColor,
+          brushRadius: line.brushRadius
         });
 
         // Save line with the drawn points
-        points = points;
-        saveLine({ brushColor, brushRadius });
+        points = line.points;
+        saveLine({ brushColor: line.brushColor, brushRadius: line.brushRadius });
+        console.log(lines);
         return;
       }
 
@@ -409,6 +415,8 @@
       brushColor: brushColor || brushColor,
       brushRadius: brushRadius || brushRadius
     });
+    console.log("saved");
+    console.log(lines);
 
     // Reset points array
     points.length = 0;

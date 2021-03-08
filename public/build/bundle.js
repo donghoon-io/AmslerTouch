@@ -30396,7 +30396,7 @@ var app = (function () {
     	return child_ctx;
     }
 
-    // (668:4) {#each canvasTypes as {name, zIndex}}
+    // (669:4) {#each canvasTypes as {name, zIndex}}
     function create_each_block(ctx) {
     	let canvas_1;
     	let canvas_1_key_value;
@@ -30413,7 +30413,7 @@ var app = (function () {
     			set_style(canvas_1, "display", "block");
     			set_style(canvas_1, "position", "absolute");
     			set_style(canvas_1, "z-index", /*zIndex*/ ctx[67]);
-    			add_location(canvas_1, file$c, 668, 6, 15299);
+    			add_location(canvas_1, file$c, 669, 6, 15323);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, canvas_1, anchor);
@@ -30527,7 +30527,7 @@ var app = (function () {
     		block,
     		id: create_each_block.name,
     		type: "each",
-    		source: "(668:4) {#each canvasTypes as {name, zIndex}}",
+    		source: "(669:4) {#each canvasTypes as {name, zIndex}}",
     		ctx
     	});
 
@@ -30557,7 +30557,7 @@ var app = (function () {
     			set_style(div, "height", /*canvasHeight*/ ctx[2] + "px");
     			set_style(div, "width", /*canvasWidth*/ ctx[1] + "px");
     			set_style(div, "background-color", /*backgroundColor*/ ctx[0]);
-    			add_location(div, file$c, 663, 2, 15078);
+    			add_location(div, file$c, 664, 2, 15102);
     		},
     		l: function claim(nodes) {
     			throw new Error_1("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -30902,7 +30902,6 @@ var app = (function () {
 
     					simulateDrawingLines({ lines, immediate: true });
     				} else {
-    					console.log(isPressing);
     					clearInterval(timer);
     					circleSize = 0;
     					isInvalidated = false;
@@ -30938,7 +30937,7 @@ var app = (function () {
     			function () {
     				handleDrawInner(initX, initY);
     			},
-    			500
+    			400
     		);
     	};
 
@@ -30964,11 +30963,14 @@ var app = (function () {
     		isDrawing = false;
 
     		isPressing = false;
+    		isInvalidated = false;
 
     		if (!isStaticDrawing) {
     			e.preventDefault();
     			saveLine();
     		}
+
+    		isStaticDrawing = true;
     	};
 
     	let handleCanvasResize = (entries, observer) => {

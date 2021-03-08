@@ -301,7 +301,6 @@
         })
         simulateDrawingLines({ lines, immediate: true });
       } else {
-        console.log(isPressing);
         clearInterval(timer);
         circleSize = 0;
         isInvalidated = false;
@@ -340,7 +339,7 @@
     setTimeout(
       function() {
         handleDrawInner(initX, initY);
-      }, 500);
+      }, 400);
 
     
     
@@ -370,11 +369,13 @@
     // Stop drawing & save the drawn line
     isDrawing = false;
     isPressing = false;
+    isInvalidated = false;
     
     if (!isStaticDrawing) {
-    e.preventDefault();
+      e.preventDefault();
       saveLine();
     }
+    isStaticDrawing = true;
   };
 
   let handleCanvasResize = (entries, observer) => {

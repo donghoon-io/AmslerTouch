@@ -266,21 +266,28 @@
 
   var circleSize = 0;
   var timer = 0;
+  var isInvalidated = false;
 
   function drawCircle(x, y) {
+    
     timer = setInterval(function() {
-      if (true) {
+      if (isPressing) {
         circleSize += 2;
 
-        let tempLines = lines.slice(0, lines.length-1);
-        clear();
-        lines = tempLines;
-        console.log(lines);
-        simulateDrawingLines({ lines, immediate: true });
+        if (isInvalidated) {
+          let tempLines = lines.slice(0, lines.length-1);
+          clear();
+          lines = tempLines;
+          console.log(lines);
+          simulateDrawingLines({ lines, immediate: true });
+        } else {
+          isInvalidated = true;
+        }
+
 
         let tempPoints = [];
 
-        for (var step = 0; step < 360; step++) {
+        for (var step = 0; step < 360; step=step+2) {
           tempPoints.push({
             x: x+Math.cos(degreesToRadians(step)) * circleSize,
             y: y+Math.sin(degreesToRadians(step)) * circleSize
@@ -294,7 +301,10 @@
         })
         simulateDrawingLines({ lines, immediate: true });
       } else {
+        console.log(isPressing);
         clearInterval(timer);
+        circleSize = 0;
+        isInvalidated = false;
       }
     }, 20);
   }
@@ -303,35 +313,56 @@
     return degrees * (pi / 180);
   }
 
-  let handleDrawStart = e => {
-    e.preventDefault();
-
-    drawCircle(355, 209);
-
+  function handleDrawInner(x, y) {
     // Start drawing
     isPressing = true;
-    isStaticDrawing = true;
-
-    const { x, y } = getPointerPos(e);
-
-    if (e.touches && e.touches.length > 0) {
-      // on touch, set catenary position to touch pos
+    
+    if (isStaticDrawing) {
+      drawCircle(x, y);
+    } else {
       lazy.update({ x, y }, { both: true });
-    }
 
-    // Ensure the initial down position gets added to our line
-    handlePointerMove(x, y);
+      // Ensure the initial down position gets added to our line
+      handlePointerMove(x, y);
+    }
+  }
+  
+  var initX = 0.0;
+  var initY = 0.0;
+  
+
+  let handleDrawStart = e => {
+    e.preventDefault();
+    
+    initX = getPointerPos(e).x;
+    initY = getPointerPos(e).y;
+
+    setTimeout(
+      function() {
+        handleDrawInner(initX, initY);
+      }, 500);
+
+    
+    
   };
 
   let handleDrawMove = e => {
     e.preventDefault();
-
+    
     const { x, y } = getPointerPos(e);
-    handlePointerMove(x, y);
+    
+    const distance = Math.sqrt(Math.pow((x-initX),2)+Math.pow((y-initY),2));
+
+    if (distance >= 30) {
+      isStaticDrawing = false;
+    }
+
+    if (!isStaticDrawing) {
+      handlePointerMove(x, y);
+    }
   };
 
   let handleDrawEnd = e => {
-    e.preventDefault();
 
     // Draw to this end pos
     handleDrawMove(e);
@@ -339,7 +370,11 @@
     // Stop drawing & save the drawn line
     isDrawing = false;
     isPressing = false;
-    saveLine();
+    
+    if (!isStaticDrawing) {
+    e.preventDefault();
+      saveLine();
+    }
   };
 
   let handleCanvasResize = (entries, observer) => {

@@ -30389,18 +30389,18 @@ var app = (function () {
 
     function get_each_context(ctx, list, i) {
     	const child_ctx = ctx.slice();
-    	child_ctx[62] = list[i].name;
-    	child_ctx[63] = list[i].zIndex;
-    	child_ctx[64] = list;
-    	child_ctx[65] = i;
+    	child_ctx[66] = list[i].name;
+    	child_ctx[67] = list[i].zIndex;
+    	child_ctx[68] = list;
+    	child_ctx[69] = i;
     	return child_ctx;
     }
 
-    // (633:4) {#each canvasTypes as {name, zIndex}}
+    // (668:4) {#each canvasTypes as {name, zIndex}}
     function create_each_block(ctx) {
     	let canvas_1;
     	let canvas_1_key_value;
-    	let name = /*name*/ ctx[62];
+    	let name = /*name*/ ctx[66];
     	let mounted;
     	let dispose;
     	const assign_canvas_1 = () => /*canvas_1_binding*/ ctx[25](canvas_1, name);
@@ -30409,11 +30409,11 @@ var app = (function () {
     	const block = {
     		c: function create() {
     			canvas_1 = element("canvas");
-    			attr_dev(canvas_1, "key", canvas_1_key_value = /*name*/ ctx[62]);
+    			attr_dev(canvas_1, "key", canvas_1_key_value = /*name*/ ctx[66]);
     			set_style(canvas_1, "display", "block");
     			set_style(canvas_1, "position", "absolute");
-    			set_style(canvas_1, "z-index", /*zIndex*/ ctx[63]);
-    			add_location(canvas_1, file$c, 633, 6, 14708);
+    			set_style(canvas_1, "z-index", /*zIndex*/ ctx[67]);
+    			add_location(canvas_1, file$c, 668, 6, 15299);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, canvas_1, anchor);
@@ -30424,7 +30424,7 @@ var app = (function () {
     					listen_dev(
     						canvas_1,
     						"mousedown",
-    						/*name*/ ctx[62] === "interface"
+    						/*name*/ ctx[66] === "interface"
     						? /*handleDrawStart*/ ctx[7]
     						: undefined,
     						false,
@@ -30434,7 +30434,7 @@ var app = (function () {
     					listen_dev(
     						canvas_1,
     						"mousemove",
-    						/*name*/ ctx[62] === "interface"
+    						/*name*/ ctx[66] === "interface"
     						? /*handleDrawMove*/ ctx[8]
     						: undefined,
     						false,
@@ -30444,7 +30444,7 @@ var app = (function () {
     					listen_dev(
     						canvas_1,
     						"mouseup",
-    						/*name*/ ctx[62] === "interface"
+    						/*name*/ ctx[66] === "interface"
     						? /*handleDrawEnd*/ ctx[9]
     						: undefined,
     						false,
@@ -30454,7 +30454,7 @@ var app = (function () {
     					listen_dev(
     						canvas_1,
     						"mouseout",
-    						/*name*/ ctx[62] === "interface"
+    						/*name*/ ctx[66] === "interface"
     						? /*handleDrawEnd*/ ctx[9]
     						: undefined,
     						false,
@@ -30464,7 +30464,7 @@ var app = (function () {
     					listen_dev(
     						canvas_1,
     						"touchstart",
-    						/*name*/ ctx[62] === "interface"
+    						/*name*/ ctx[66] === "interface"
     						? /*handleDrawStart*/ ctx[7]
     						: undefined,
     						false,
@@ -30474,7 +30474,7 @@ var app = (function () {
     					listen_dev(
     						canvas_1,
     						"touchmove",
-    						/*name*/ ctx[62] === "interface"
+    						/*name*/ ctx[66] === "interface"
     						? /*handleDrawMove*/ ctx[8]
     						: undefined,
     						false,
@@ -30484,7 +30484,7 @@ var app = (function () {
     					listen_dev(
     						canvas_1,
     						"touchend",
-    						/*name*/ ctx[62] === "interface"
+    						/*name*/ ctx[66] === "interface"
     						? /*handleDrawEnd*/ ctx[9]
     						: undefined,
     						false,
@@ -30494,7 +30494,7 @@ var app = (function () {
     					listen_dev(
     						canvas_1,
     						"touchcancel",
-    						/*name*/ ctx[62] === "interface"
+    						/*name*/ ctx[66] === "interface"
     						? /*handleDrawEnd*/ ctx[9]
     						: undefined,
     						false,
@@ -30509,9 +30509,9 @@ var app = (function () {
     		p: function update(new_ctx, dirty) {
     			ctx = new_ctx;
 
-    			if (name !== /*name*/ ctx[62]) {
+    			if (name !== /*name*/ ctx[66]) {
     				unassign_canvas_1();
-    				name = /*name*/ ctx[62];
+    				name = /*name*/ ctx[66];
     				assign_canvas_1();
     			}
     		},
@@ -30527,7 +30527,7 @@ var app = (function () {
     		block,
     		id: create_each_block.name,
     		type: "each",
-    		source: "(633:4) {#each canvasTypes as {name, zIndex}}",
+    		source: "(668:4) {#each canvasTypes as {name, zIndex}}",
     		ctx
     	});
 
@@ -30557,7 +30557,7 @@ var app = (function () {
     			set_style(div, "height", /*canvasHeight*/ ctx[2] + "px");
     			set_style(div, "width", /*canvasWidth*/ ctx[1] + "px");
     			set_style(div, "background-color", /*backgroundColor*/ ctx[0]);
-    			add_location(div, file$c, 628, 2, 14487);
+    			add_location(div, file$c, 663, 2, 15078);
     		},
     		l: function claim(nodes) {
     			throw new Error_1("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -30867,20 +30867,27 @@ var app = (function () {
 
     	var circleSize = 0;
     	var timer = 0;
+    	var isInvalidated = false;
 
     	function drawCircle(x, y) {
     		timer = setInterval(
     			function () {
-    				{
+    				if (isPressing) {
     					circleSize += 2;
-    					let tempLines = lines.slice(0, lines.length - 1);
-    					clear();
-    					lines = tempLines;
-    					console.log(lines);
-    					simulateDrawingLines({ lines, immediate: true });
+
+    					if (isInvalidated) {
+    						let tempLines = lines.slice(0, lines.length - 1);
+    						clear();
+    						lines = tempLines;
+    						console.log(lines);
+    						simulateDrawingLines({ lines, immediate: true });
+    					} else {
+    						isInvalidated = true;
+    					}
+
     					let tempPoints = [];
 
-    					for (var step = 0; step < 360; step++) {
+    					for (var step = 0; step < 360; step = step + 2) {
     						tempPoints.push({
     							x: x + Math.cos(degreesToRadians(step)) * circleSize,
     							y: y + Math.sin(degreesToRadians(step)) * circleSize
@@ -30894,40 +30901,62 @@ var app = (function () {
     					});
 
     					simulateDrawingLines({ lines, immediate: true });
+    				} else {
+    					console.log(isPressing);
+    					clearInterval(timer);
+    					circleSize = 0;
+    					isInvalidated = false;
     				}
     			},
     			20
     		);
     	}
 
-    	let handleDrawStart = e => {
-    		e.preventDefault();
-    		drawCircle(355, 209);
-
+    	function handleDrawInner(x, y) {
     		// Start drawing
     		isPressing = true;
 
-    		isStaticDrawing = true;
-    		const { x, y } = getPointerPos(e);
-
-    		if (e.touches && e.touches.length > 0) {
-    			// on touch, set catenary position to touch pos
+    		if (isStaticDrawing) {
+    			drawCircle(x, y);
+    		} else {
     			lazy.update({ x, y }, { both: true });
-    		}
 
-    		// Ensure the initial down position gets added to our line
-    		handlePointerMove(x, y);
+    			// Ensure the initial down position gets added to our line
+    			handlePointerMove(x, y);
+    		}
+    	}
+
+    	var initX = 0;
+    	var initY = 0;
+
+    	let handleDrawStart = e => {
+    		e.preventDefault();
+    		initX = getPointerPos(e).x;
+    		initY = getPointerPos(e).y;
+
+    		setTimeout(
+    			function () {
+    				handleDrawInner(initX, initY);
+    			},
+    			500
+    		);
     	};
 
     	let handleDrawMove = e => {
     		e.preventDefault();
     		const { x, y } = getPointerPos(e);
-    		handlePointerMove(x, y);
+    		const distance = Math.sqrt(Math.pow(x - initX, 2) + Math.pow(y - initY, 2));
+
+    		if (distance >= 30) {
+    			isStaticDrawing = false;
+    		}
+
+    		if (!isStaticDrawing) {
+    			handlePointerMove(x, y);
+    		}
     	};
 
     	let handleDrawEnd = e => {
-    		e.preventDefault();
-
     		// Draw to this end pos
     		handleDrawMove(e);
 
@@ -30935,7 +30964,11 @@ var app = (function () {
     		isDrawing = false;
 
     		isPressing = false;
-    		saveLine();
+
+    		if (!isStaticDrawing) {
+    			e.preventDefault();
+    			saveLine();
+    		}
     	};
 
     	let handleCanvasResize = (entries, observer) => {
@@ -31302,8 +31335,12 @@ var app = (function () {
     		simulateDrawingLines,
     		circleSize,
     		timer,
+    		isInvalidated,
     		drawCircle,
     		degreesToRadians,
+    		handleDrawInner,
+    		initX,
+    		initY,
     		handleDrawStart,
     		handleDrawMove,
     		handleDrawEnd,
@@ -31363,6 +31400,9 @@ var app = (function () {
     		if ("simulateDrawingLines" in $$props) simulateDrawingLines = $$props.simulateDrawingLines;
     		if ("circleSize" in $$props) circleSize = $$props.circleSize;
     		if ("timer" in $$props) timer = $$props.timer;
+    		if ("isInvalidated" in $$props) isInvalidated = $$props.isInvalidated;
+    		if ("initX" in $$props) initX = $$props.initX;
+    		if ("initY" in $$props) initY = $$props.initY;
     		if ("handleDrawStart" in $$props) $$invalidate(7, handleDrawStart = $$props.handleDrawStart);
     		if ("handleDrawMove" in $$props) $$invalidate(8, handleDrawMove = $$props.handleDrawMove);
     		if ("handleDrawEnd" in $$props) $$invalidate(9, handleDrawEnd = $$props.handleDrawEnd);

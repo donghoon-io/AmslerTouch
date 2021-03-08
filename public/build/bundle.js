@@ -30396,7 +30396,7 @@ var app = (function () {
     	return child_ctx;
     }
 
-    // (669:4) {#each canvasTypes as {name, zIndex}}
+    // (620:2) {#each canvasTypes as { name, zIndex }}
     function create_each_block(ctx) {
     	let canvas_1;
     	let canvas_1_key_value;
@@ -30413,7 +30413,7 @@ var app = (function () {
     			set_style(canvas_1, "display", "block");
     			set_style(canvas_1, "position", "absolute");
     			set_style(canvas_1, "z-index", /*zIndex*/ ctx[67]);
-    			add_location(canvas_1, file$c, 669, 6, 15323);
+    			add_location(canvas_1, file$c, 620, 4, 15069);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, canvas_1, anchor);
@@ -30527,7 +30527,7 @@ var app = (function () {
     		block,
     		id: create_each_block.name,
     		type: "each",
-    		source: "(669:4) {#each canvasTypes as {name, zIndex}}",
+    		source: "(620:2) {#each canvasTypes as { name, zIndex }}",
     		ctx
     	});
 
@@ -30553,11 +30553,11 @@ var app = (function () {
     				each_blocks[i].c();
     			}
 
-    			attr_dev(div, "class", div_class_value = "drwaing-container " + /*classes*/ ctx[3] + " svelte-h9f8x2");
+    			attr_dev(div, "class", div_class_value = "drwaing-container " + /*classes*/ ctx[3] + " svelte-17ngeei");
     			set_style(div, "height", /*canvasHeight*/ ctx[2] + "px");
     			set_style(div, "width", /*canvasWidth*/ ctx[1] + "px");
     			set_style(div, "background-color", /*backgroundColor*/ ctx[0]);
-    			add_location(div, file$c, 664, 2, 15102);
+    			add_location(div, file$c, 614, 0, 14855);
     		},
     		l: function claim(nodes) {
     			throw new Error_1("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -30596,7 +30596,7 @@ var app = (function () {
     				each_blocks.length = each_value.length;
     			}
 
-    			if (dirty[0] & /*classes*/ 8 && div_class_value !== (div_class_value = "drwaing-container " + /*classes*/ ctx[3] + " svelte-h9f8x2")) {
+    			if (dirty[0] & /*classes*/ 8 && div_class_value !== (div_class_value = "drwaing-container " + /*classes*/ ctx[3] + " svelte-17ngeei")) {
     				attr_dev(div, "class", div_class_value);
     			}
 
@@ -31226,8 +31226,6 @@ var app = (function () {
 
     		return newCanvas.toDataURL();
     	}
-
-    	
 
     	const writable_props = [
     		"loadTimeOffset",

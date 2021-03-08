@@ -1,12 +1,17 @@
 <script>
-  import { onMount, afterUpdate, onDestroy, createEventDispatcher  } from "svelte";
+  import {
+    onMount,
+    afterUpdate,
+    onDestroy,
+    createEventDispatcher,
+  } from "svelte";
   const dispatch = createEventDispatcher();
   import { LazyBrush } from "lazy-brush";
   import { Catenary } from "catenary-curve";
 
   import ResizeObserver from "resize-observer-polyfill";
 
-  import {drawImageProp} from "./drawingHelpers.js";
+  import { drawImageProp } from "./drawingHelpers.js";
 
   export let loadTimeOffset = 5;
   export let lazyRadius = 12;
@@ -23,80 +28,74 @@
   export let saveData = "";
   export let immediateLoading = false;
   export let hideInterface = false;
-  export let classes = '';
-
+  export let classes = "";
 
   function midPointBtw(p1, p2) {
-      return {
-        x: p1.x + (p2.x - p1.x) / 2,
-        y: p1.y + (p2.y - p1.y) / 2
-      };
-    }
+    return {
+      x: p1.x + (p2.x - p1.x) / 2,
+      y: p1.y + (p2.y - p1.y) / 2,
+    };
+  }
 
   const canvasStyle = {
     display: "block",
-    position: "absolute"
+    position: "absolute",
   };
 
   const canvasTypes = [
     {
       name: "interface",
-      zIndex: 15
+      zIndex: 15,
     },
     {
       name: "drawing",
-      zIndex: 11
+      zIndex: 11,
     },
     {
       name: "temp",
-      zIndex: 12
+      zIndex: 12,
     },
     {
       name: "grid",
-      zIndex: 10
-    }
+      zIndex: 10,
+    },
   ];
 
+  let canvas = {};
+  let ctx = {};
 
-   let canvas = {};
-   let ctx = {};
+  let catenary = new Catenary();
 
-   let catenary = new Catenary();
+  let points = [];
+  let lines = [];
 
-   let points = [];
-   let lines = [];
+  let isStaticDrawing = true;
 
-   let isStaticDrawing = true;
+  let mouseHasMoved = true;
+  let valuesChanged = true;
+  let isDrawing = false;
+  let isPressing = false;
+  let lazy = null;
+  let image = null;
+  let chainLength = null;
 
-   let mouseHasMoved = true;
-   let valuesChanged = true;
-   let isDrawing = false;
-   let isPressing = false;
-   let lazy = null;
-   let image = null;
-   let chainLength = null;
+  let canvasContainer = null;
+  let canvasObserver = null;
 
-   let canvasContainer = null;
-   let canvasObserver = null;
-
-
-
-
-   onMount(() => {
-
+  onMount(() => {
     Object.keys(canvas).forEach((key) => {
       ctx[key] = canvas[key].getContext("2d");
-     })
+    });
 
-    console.log(ctx)
+    console.log(ctx);
 
-     lazy = new LazyBrush({
-       radius: lazyRadius * window.devicePixelRatio,
+    lazy = new LazyBrush({
+      radius: lazyRadius * window.devicePixelRatio,
       enabled: true,
       initialPoint: {
         x: window.innerWidth / 2,
-        y: window.innerHeight / 2
-      }
+        y: window.innerHeight / 2,
+      },
     });
     chainLength = lazyRadius * window.devicePixelRatio;
 
@@ -111,14 +110,8 @@
     window.setTimeout(() => {
       const initX = window.innerWidth / 2;
       const initY = window.innerHeight / 2;
-      lazy.update(
-        { x: initX - chainLength / 4, y: initY },
-        { both: true }
-      );
-      lazy.update(
-        { x: initX + chainLength / 4, y: initY },
-        { both: false }
-      );
+      lazy.update({ x: initX - chainLength / 4, y: initY }, { both: true });
+      lazy.update({ x: initX + chainLength / 4, y: initY }, { both: false });
       mouseHasMoved = true;
       valuesChanged = true;
       clear();
@@ -128,9 +121,7 @@
         loadSaveData(saveData);
       }
     }, 100);
-
   });
-
 
   afterUpdate(() => {
     // // Set new lazyRadius values
@@ -142,13 +133,9 @@
     drawImage();
   });
 
-
-
   onDestroy(() => {
-    canvasObserver.unobserve(canvasContainer)
+    canvasObserver.unobserve(canvasContainer);
   });
-
-
 
   let drawImage = () => {
     if (!imgSrc) return;
@@ -156,11 +143,11 @@
     image.crossOrigin = "anonymous";
     image.onload = () => drawImageProp({ ctx: ctx.grid, img: image });
     image.src = imgSrc;
-    console.log(image)
+    console.log(image);
   };
 
   let undo = () => {
-    let tempLines = lines.slice(0, lines.length-1);
+    let tempLines = lines.slice(0, lines.length - 1);
     clear();
     lines = tempLines;
     console.log(lines);
@@ -172,12 +159,12 @@
     return JSON.stringify({
       lines: lines,
       width: canvasWidth,
-      height: canvasHeight
+      height: canvasHeight,
     });
   };
 
   let loadSaveData = (saveData, immediate = immediateLoading) => {
-    console.log(saveData)
+    console.log(saveData);
     if (typeof saveData !== "string") {
       throw new Error("saveData needs to be of type string!");
     }
@@ -193,7 +180,7 @@
     if (width === canvasWidth && height === canvasHeight) {
       simulateDrawingLines({
         lines,
-        immediate
+        immediate,
       });
     } else {
       const scaleX = canvasWidth / width;
@@ -201,19 +188,18 @@
       const scaleAvg = (scaleX + scaleY) / 2;
 
       simulateDrawingLines({
-        lines: lines.map(line => ({
+        lines: lines.map((line) => ({
           ...line,
-          points: line.points.map(p => ({
+          points: line.points.map((p) => ({
             x: p.x * scaleX,
-            y: p.y * scaleY
+            y: p.y * scaleY,
           })),
-          brushRadius: line.brushRadius * scaleAvg
+          brushRadius: line.brushRadius * scaleAvg,
         })),
-        immediate
+        immediate,
       });
     }
   };
-
 
   let simulateDrawingLines = ({ lines, immediate }) => {
     // Simulate live-drawing of the loaded lines
@@ -224,21 +210,22 @@
     var tempLines = lines.slice();
     lines.length = 0;
     console.log(tempLines);
-    tempLines.forEach(line => {
-      
-
+    tempLines.forEach((line) => {
       // Draw all at once if immediate flag is set, instead of using setTimeout
       if (immediate) {
         // Draw the points
         drawPoints({
           points: line.points,
           brushColor: line.brushColor,
-          brushRadius: line.brushRadius
+          brushRadius: line.brushRadius,
         });
 
         // Save line with the drawn points
         points = line.points;
-        saveLine({ brushColor: line.brushColor, brushRadius: line.brushRadius });
+        saveLine({
+          brushColor: line.brushColor,
+          brushRadius: line.brushRadius,
+        });
         console.log(lines);
         return;
       }
@@ -250,7 +237,7 @@
           drawPoints({
             points: points.slice(0, i + 1),
             brushColor,
-            brushRadius
+            brushRadius,
           });
         }, curTime);
       }
@@ -269,13 +256,12 @@
   var isInvalidated = false;
 
   function drawCircle(x, y) {
-    
-    timer = setInterval(function() {
+    timer = setInterval(function () {
       if (isPressing) {
         circleSize += 2;
 
         if (isInvalidated) {
-          let tempLines = lines.slice(0, lines.length-1);
+          let tempLines = lines.slice(0, lines.length - 1);
           clear();
           lines = tempLines;
           console.log(lines);
@@ -284,21 +270,20 @@
           isInvalidated = true;
         }
 
-
         let tempPoints = [];
 
-        for (var step = 0; step < 360; step=step+2) {
+        for (var step = 0; step < 360; step = step + 2) {
           tempPoints.push({
-            x: x+Math.cos(degreesToRadians(step)) * circleSize,
-            y: y+Math.sin(degreesToRadians(step)) * circleSize
-          })
+            x: x + Math.cos(degreesToRadians(step)) * circleSize,
+            y: y + Math.sin(degreesToRadians(step)) * circleSize,
+          });
         }
 
         lines.push({
           points: tempPoints,
           brushColor: brushColor,
-          brushRadius: brushRadius
-        })
+          brushRadius: brushRadius,
+        });
         simulateDrawingLines({ lines, immediate: true });
       } else {
         clearInterval(timer);
@@ -315,7 +300,7 @@
   function handleDrawInner(x, y) {
     // Start drawing
     isPressing = true;
-    
+
     if (isStaticDrawing) {
       drawCircle(x, y);
     } else {
@@ -325,32 +310,27 @@
       handlePointerMove(x, y);
     }
   }
-  
+
   var initX = 0.0;
   var initY = 0.0;
-  
 
-  let handleDrawStart = e => {
+  let handleDrawStart = (e) => {
     e.preventDefault();
-    
+
     initX = getPointerPos(e).x;
     initY = getPointerPos(e).y;
 
-    setTimeout(
-      function() {
-        handleDrawInner(initX, initY);
-      }, 400);
-
-    
-    
+    setTimeout(function () {
+      handleDrawInner(initX, initY);
+    }, 400);
   };
 
-  let handleDrawMove = e => {
+  let handleDrawMove = (e) => {
     e.preventDefault();
-    
+
     const { x, y } = getPointerPos(e);
-    
-    const distance = Math.sqrt(Math.pow((x-initX),2)+Math.pow((y-initY),2));
+
+    const distance = Math.sqrt(Math.pow(x - initX, 2) + Math.pow(y - initY, 2));
 
     if (distance >= 30) {
       isStaticDrawing = false;
@@ -361,8 +341,7 @@
     }
   };
 
-  let handleDrawEnd = e => {
-
+  let handleDrawEnd = (e) => {
     // Draw to this end pos
     handleDrawMove(e);
 
@@ -370,7 +349,7 @@
     isDrawing = false;
     isPressing = false;
     isInvalidated = false;
-    
+
     if (!isStaticDrawing) {
       e.preventDefault();
       saveLine();
@@ -381,7 +360,7 @@
   let handleCanvasResize = (entries, observer) => {
     const saveData = getSaveData();
     for (const entry of entries) {
-      console.log(entry)
+      console.log(entry);
       const { width, height } = entry.contentRect;
       setCanvasSize(canvas.interface, width, height);
       setCanvasSize(canvas.drawing, width, height);
@@ -402,7 +381,7 @@
     canvas.style.height = height;
   };
 
-  let getPointerPos = e => {
+  let getPointerPos = (e) => {
     const rect = canvas.interface.getBoundingClientRect();
 
     // use cursor pos as default
@@ -418,7 +397,7 @@
     // return mouse/touch position inside canvas
     return {
       x: clientX - rect.left,
-      y: clientY - rect.top
+      y: clientY - rect.top,
     };
   };
 
@@ -428,10 +407,7 @@
     lazy.update({ x, y });
     const isDisabled = !lazy.isEnabled();
 
-    if (
-      (isPressing && !isDrawing) ||
-      (isDisabled && isPressing)
-    ) {
+    if ((isPressing && !isDrawing) || (isDisabled && isPressing)) {
       // Start drawing and add point
       isDrawing = true;
       points.push(lazy.brush.toObject());
@@ -445,7 +421,7 @@
       drawPoints({
         points: points,
         brushColor: brushColor,
-        brushRadius: brushRadius
+        brushRadius: brushRadius,
       });
     }
 
@@ -457,12 +433,7 @@
     ctx.temp.lineCap = "round";
     ctx.temp.strokeStyle = brushColor;
 
-    ctx.temp.clearRect(
-      0,
-      0,
-      ctx.temp.canvas.width,
-      ctx.temp.canvas.height
-    );
+    ctx.temp.clearRect(0, 0, ctx.temp.canvas.width, ctx.temp.canvas.height);
     ctx.temp.lineWidth = brushRadius * 2;
 
     let p1 = points[0];
@@ -493,7 +464,7 @@
     lines.push({
       points: [...points],
       brushColor: brushColor || brushColor,
-      brushRadius: brushRadius || brushRadius
+      brushRadius: brushRadius || brushRadius,
     });
     console.log("saved");
     console.log(lines);
@@ -514,24 +485,14 @@
   };
 
   let triggerOnChange = (event) => {
-    dispatch('change', event);
+    dispatch("change", event);
   };
 
   let clear = () => {
     lines = [];
     valuesChanged = true;
-    ctx.drawing.clearRect(
-      0,
-      0,
-      canvas.drawing.width,
-      canvas.drawing.height
-    );
-    ctx.temp.clearRect(
-      0,
-      0,
-      canvas.temp.width,
-      canvas.temp.height
-    );
+    ctx.drawing.clearRect(0, 0, canvas.drawing.width, canvas.drawing.height);
+    ctx.temp.clearRect(0, 0, canvas.temp.width, canvas.temp.height);
   };
 
   let loop = ({ once = false } = {}) => {
@@ -551,7 +512,7 @@
     }
   };
 
-  let drawGrid = ctx => {
+  let drawGrid = (ctx) => {
     if (hideGrid) return;
 
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
@@ -621,64 +582,61 @@
     ctx.fill();
   };
 
-  export function clearDrawings(){
-    clear()
+  export function clearDrawings() {
+    clear();
   }
 
-  export function undoDrawings(){
-    undo()
+  export function undoDrawings() {
+    undo();
   }
 
-   export function get_image_data(){
-     return prepareImageData()
+  export function get_image_data() {
+    return prepareImageData();
   }
-
 
   function prepareImageData() {
-    var newCanvas = document.createElement('canvas'),
-        _ctx = newCanvas.getContext('2d'),
-        width = canvasWidth,
-        height = canvasHeight;
+    var newCanvas = document.createElement("canvas"),
+      _ctx = newCanvas.getContext("2d"),
+      width = canvasWidth,
+      height = canvasHeight;
 
     newCanvas.width = width;
     newCanvas.height = height;
 
-    [ctx.grid.canvas,ctx.drawing.canvas].forEach(function(n) {
-        _ctx.beginPath();
-        _ctx.drawImage(n, 0, 0, width, height);
+    [ctx.grid.canvas, ctx.drawing.canvas].forEach(function (n) {
+      _ctx.beginPath();
+      _ctx.drawImage(n, 0, 0, width, height);
     });
 
     return newCanvas.toDataURL();
-  };
-
-
+  }
 </script>
+
+<div
+  class="drwaing-container {classes}"
+  style="height:{canvasHeight}px; width:{canvasWidth}px; background-color:{backgroundColor}"
+  bind:this={canvasContainer}
+>
+  {#each canvasTypes as { name, zIndex }}
+    <canvas
+      key={name}
+      style="display:block;position:absolute; z-index:{zIndex}"
+      bind:this={canvas[name]}
+      on:mousedown={name === "interface" ? handleDrawStart : undefined}
+      on:mousemove={name === "interface" ? handleDrawMove : undefined}
+      on:mouseup={name === "interface" ? handleDrawEnd : undefined}
+      on:mouseout={name === "interface" ? handleDrawEnd : undefined}
+      on:touchstart={name === "interface" ? handleDrawStart : undefined}
+      on:touchmove={name === "interface" ? handleDrawMove : undefined}
+      on:touchend={name === "interface" ? handleDrawEnd : undefined}
+      on:touchcancel={name === "interface" ? handleDrawEnd : undefined}
+    />
+  {/each}
+</div>
+
 <style>
-  .drwaing-container{
+  .drwaing-container {
     display: block;
     touch-action: none;
   }
-
-
 </style>
-
-  <div
-    class="drwaing-container {classes}"
-    style="height:{canvasHeight}px; width:{canvasWidth}px; background-color:{backgroundColor}"
-    bind:this={canvasContainer}>
-    {#each canvasTypes as {name, zIndex}}
-      <canvas
-        key={name}
-        style="display:block;position:absolute; z-index:{zIndex}"
-        bind:this={canvas[name]}
-        on:mousedown={name === "interface" ? handleDrawStart : undefined}
-        on:mousemove={name === "interface" ? handleDrawMove : undefined}
-        on:mouseup={name === "interface" ? handleDrawEnd : undefined}
-        on:mouseout={name === "interface" ? handleDrawEnd : undefined}
-        on:touchstart={name === "interface" ? handleDrawStart : undefined}
-        on:touchmove={name === "interface" ? handleDrawMove : undefined}
-        on:touchend={name === "interface" ? handleDrawEnd : undefined}
-        on:touchcancel={name === "interface" ? handleDrawEnd : undefined}
-      />
-    {/each}
-  </div>

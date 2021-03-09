@@ -96,8 +96,7 @@
           <i class="fas fa-bell" />
         </span>
         <span class="inline-block align-middle mr-8">
-          <b class="capitalize">Step 1:</b> Align your sight with the center of grid.
-          Then, draw blurred region with the pentool.
+          <b>Note: Keep yourself 55cm away from the screen before testing</b> (for 75 dpi screen; the distance may vary based on the screen dpi)
         </span>
         <button
           class="absolute bg-transparent text-2xl font-semibold leading-none right-0 top-0 mt-4 mr-4 outline-none focus:outline-none"
